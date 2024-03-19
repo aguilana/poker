@@ -1,5 +1,4 @@
 const { evaluatePokerHand, findCardsToMulligan, remainingCardsInDeck, runMulliganHandImprovementProbability } = require('../utils');
-// const { remainingCardsInDeck, runMulliganHandImprovementProbability } = require('../utils/');
 const { testHands } = require('../data/index.js');
 const { Rank } = require('../utils/index.js');
 
