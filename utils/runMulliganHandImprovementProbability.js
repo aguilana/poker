@@ -62,12 +62,11 @@ function runMulliganHandImprovementProbability(evalHand, remainingCardsInDeck, c
 
     switch (evalHand.handRankName) {
 
+      /**
+       * evaluate if the hand is improved from redraw with evalHand fn
+       * return an object with the rank of the hand and the cards to keep { handRankName: Rank.name, cardsToKeep: string[] }
+      **/
       case Rank.FOUR_OF_A_KIND.name:
-        /**
-         * evaluate if the hand is improved from redraw with evalHand fn
-         * return an object with the rank of the hand and the cards to keep { handRankName: Rank.name, cardsToKeep: string[] }
-         */
-
         const newFourKindHand = evaluatePokerHand(newHand);
         if (newFourKindHand.rank > evalHand.rank) improved = true;
         else if (newFourKindHand.rank === evalHand.rank) {
@@ -80,18 +79,20 @@ function runMulliganHandImprovementProbability(evalHand, remainingCardsInDeck, c
         }
         break;
 
+      /**
+       * evaluate if the hand is improved from redraw with evalHand fn
+       * better than three of a kind is a full house, or a higher kicker for the three of a kind
+      **/
       case Rank.THREE_OF_A_KIND.name:
         const newThreeKindHand = evaluatePokerHand(newHand);
         if (newThreeKindHand.rank > evalHand.rank) improved = true;
         break;
 
+      /** 
+       * mulligan 1 card with a two pair, so we will evaluate the new hand with the 4 cards we kept
+       * better than 2 pairs is full house, or a higher kicker for the two pairs
+      **/
       case Rank.TWO_PAIR.name:
-
-        /* 
-        *** mulligan 1 card with a two pair, so we will evaluate the new hand with the 4 cards we kept
-        *** better than 2 pairs is full house, or a higher kicker for the two pairs
-        */
-
         const newTwoPairHand = evaluatePokerHand(newHand);
         if (newTwoPairHand.rank > evalHand.rank) {
           improved = true
@@ -105,16 +106,19 @@ function runMulliganHandImprovementProbability(evalHand, remainingCardsInDeck, c
           }
         }
         break;
+
+      /**
+       * mulligan 3 cards with a one pair, so we will evaluate the new hand with the 2 cards we kept
+       * better than one pair is two pair, three of a kind, or a higher kicker for the one pair
+       * ex) original hand = ['5H', '3D', '4S', '5C', '6D'], rankName = one pair; cardsToKeep = ['5H', '5C']
+       * redraw combination = ['2H', 'AH', 'AC']
+       * new hand = ['5H', '5C', '2H', 'AH', 'AC']
+       * FN: const newHandEval = evaluatePokerHand(newHand) => { handRankName: Rank.TWO_PAIR.name, cardsToKeep: ['5H', '5C', '2H', 'AH'] }
+       * if the new hand is better than the original hand, we increment the improvements counter
+       * if newHandEval.rank < evalHand.rank, we increment the improvements counter
+       * return an object with the rank of the hand and the cards to keep { handRankName: Rank.name, cardsToKeep: string[] }
+      **/
       case Rank.ONE_PAIR.name:
-        // evaluate if the hand is improved from redraw with evalHand fn
-        // with a one pair we typically mulligan 3 cards, so we need to evaluate the new hand with the 2 cards we kept
-        // ex) original hand = ['5H', '3D', '4S', '5C', '6D'], rankName = one pair; cardsToKeep = ['5H', '5C']
-        // redraw combination = ['2H', 'AH', 'AC']
-        // new hand = ['5H', '5C', '2H', 'AH', 'AC']
-        // FN: const newHandEval = evaluatePokerHand(newHand) => { handRankName: Rank.TWO_PAIR.name, cardsToKeep: ['5H', '5C', '2H', 'AH'] }
-        // if the new hand is better than the original hand, we increment the improvements counter
-        // if newHandEval.rank < evalHand.rank, we increment the improvements counter
-        // return an object with the rank of the hand and the cards to keep { handRankName: Rank.name, cardsToKeep: string[] }
         const newOnePairHand = evaluatePokerHand(newHand);
         if (newOnePairHand.rank > evalHand.rank) {
           improved = true
@@ -123,8 +127,7 @@ function runMulliganHandImprovementProbability(evalHand, remainingCardsInDeck, c
 
       /**
        * *** mulligan 4 cards with a high card, so we will evaluate the new hand with the 1 card we kept
-       */
-
+      **/
       case Rank.HIGH_CARD.name:
         const newHighCardHand = evaluatePokerHand(newHand);
         if (newHighCardHand.rank > evalHand.rank) improved = true;

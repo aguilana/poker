@@ -5,8 +5,6 @@
  * 
  */
 
-
-const { testHands } = require('./data');
 const {
     remainingCardsInDeck,
     runMulliganHandImprovementProbability,

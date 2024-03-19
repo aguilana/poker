@@ -1,4 +1,3 @@
-const { Rank } = require('./Rank.js');
 const { cardValue } = require('./cardValue.js')
 
 function rankCounts(hand) {

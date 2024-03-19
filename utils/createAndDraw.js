@@ -80,11 +80,4 @@ function createShuffledDeckAndDraw() {
     return { hand, deck };
 }
 
-/**
- * SUMMARY:
- * This list of functions (`createDeck`, `shuffleDeck`, `drawCards`, and `dealCards`) creates a deck of 52 cards, shuffles the deck, and returns the deck and hands of 5 cards each
- */
-const deck = createDeck(); // Create a new deck of cards
-shuffleDeck(deck); // Shuffle the deck
-
 module.exports = { createDeck, shuffleDeck, drawCards, dealCards, createShuffledDeckAndDraw }

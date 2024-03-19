@@ -12,7 +12,7 @@ const { Rank } = require('./Rank.js');
 
 
 function evaluatePokerHand(hand) {
-    // TODO different hands in poker that we need to evaluate
+
     hand.sort((a, b) => cardValue(a) - cardValue(b));
     const counts = rankCounts(hand);
     if (isRoyalFlush(hand)) return { handRankName: Rank.ROYAL_FLUSH.name, cardsToKeep: hand, rank: Rank.ROYAL_FLUSH.rank };
