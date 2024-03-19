@@ -116,7 +116,6 @@ function runMulliganHandImprovementProbability(evalHand, remainingCardsInDeck, c
        * FN: const newHandEval = evaluatePokerHand(newHand) => { handRankName: Rank.TWO_PAIR.name, cardsToKeep: ['5H', '5C', '2H', 'AH'] }
        * if the new hand is better than the original hand, we increment the improvements counter
        * if newHandEval.rank < evalHand.rank, we increment the improvements counter
-       * return an object with the rank of the hand and the cards to keep { handRankName: Rank.name, cardsToKeep: string[] }
       **/
       case Rank.ONE_PAIR.name:
         const newOnePairHand = evaluatePokerHand(newHand);
